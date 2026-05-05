@@ -293,6 +293,109 @@
                     - 用户会怎么问
                 </p>
             </div>
+            
+            <!-- 复杂的真实例子：PPT Skill -->
+            <div style="background:#0a0a0a;border-radius:12px;padding:20px;margin-top:20px;">
+                <h4 style="color:#f97316;margin-bottom:15px;">🎨 真实例子：创建PPT的Skill</h4>
+                <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:20px;">
+                    下面是一个<strong>真实使用的Skill</strong>，来自我的技能库。让我把它拆开，一块一块来解释：
+                </p>
+                
+                <!-- 整体展示 -->
+                <pre style="background:#1e293b;padding:15px;border-radius:8px;overflow-x:auto;font-size:0.7rem;color:#a5f3fc;line-height:1.8;max-height:300px;overflow-y:auto;">
+---
+name: powerpoint
+description: "Create, read, edit .pptx decks, slides, notes, templates."
+---
+
+## Quick Reference
+| Task | Guide |
+|------|-------|
+| Read/analyze | python -m markitdown presentation.pptx |
+| Edit | Read editing.md |
+| Create | Read pptxgenjs.md |
+
+## When to use
+Use this skill any time a .pptx file is involved — creating slides, reading presentations, editing templates... Trigger when user says "deck", "slides", "presentation", or mentions .pptx.
+
+## Tools
+- markitdown (extract text)
+- pptxgenjs (create slides)
+- python-pptx (edit existing)
+- GPT Image 2 (generate images for slides)
+
+## Instructions
+1. 分析需求：理解用户要什么样的PPT
+2. 选择配色：根据主题选颜色搭配
+3. 生成图片：需要图片时用GPT Image 2生成
+4. 创建/编辑：用pptxgenjs从头创建，或编辑模板
+5. QA检查：转成图片检查是否有问题
+
+## Examples
+- "帮我做一个产品介绍PPT"
+- "，把这 个PDF转成PPT"
+- "修改第3页的标题"
+                </pre>
+                
+                <!-- 分块解读 -->
+                <div style="margin-top:25px;">
+                    <h5 style="color:#22d3ee;margin-bottom:12px;">🔍 逐块解读</h5>
+                    
+                    <!-- 块1: name -->
+                    <div style="background:rgba(245,158,11,0.1);border-left:3px solid #f59e0b;padding:12px;margin-bottom:10px;border-radius:0 8px 8px 0;">
+                        <strong style="color:#f59e0b;">1️⃣ name: powerpoint</strong><br>
+                        <span style="color:#94a3b8;font-size:0.8rem;">就像给技能起名字，这是"创建PPT"的技能</span>
+                    </div>
+                    
+                    <!-- 块2: description -->
+                    <div style="background:rgba(16,185,129,0.1);border-left:3px solid #10b981;padding:12px;margin-bottom:10px;border-radius:0 8px 8px 0;">
+                        <strong style="color:#10b981;">2️⃣ description</strong><br>
+                        <span style="color:#94a3b8;font-size:0.8rem;">告诉AI：只要是跟PPT相关的任何操作都用这个技能（创建、读取、编辑）</span>
+                    </div>
+                    
+                    <!-- 块3: when to use -->
+                    <div style="background:rgba(99,102,241,0.1);border-left:3px solid #6366f1;padding:12px;margin-bottom:10px;border-radius:0 8px 8px 0;">
+                        <strong style="color:#6366f1;">3️⃣ When to use</strong><br>
+                        <span style="color:#94a3b8;font-size:0.8rem;">详细说明什么情况下触发：用户说"deck"、"slides"、"presentation"，或提到.pptx文件</span>
+                    </div>
+                    
+                    <!-- 块4: tools -->
+                    <div style="background:rgba(139,92,246,0.1);border-left:3px solid #8b5cf6;padding:12px;margin-bottom:10px;border-radius:0 8px 8px 0;">
+                        <strong style="color:#8b5cf6;">4️⃣ Tools 工具列表</strong><br>
+                        <span style="color:#94a3b8;font-size:0.8rem;">
+                            • markitdown - 读取PPT内容<br>
+                            • pptxgenjs - 创建新PPT<br>
+                            • python-pptx - 编辑现有PPT<br>
+                            • GPT Image 2 - 生成幻灯片配图
+                        </span>
+                    </div>
+                    
+                    <!-- 块5: instructions -->
+                    <div style="background:rgba(6,182,212,0.1);border-left:3px solid #06b6d4;padding:12px;margin-bottom:10px;border-radius:0 8px 8px 0;">
+                        <strong style="color:#06b6d4;">5️⃣ Instructions 步骤</strong><br>
+                        <span style="color:#94a3b8;font-size:0.8rem;">
+                            1️⃣ 分析需求  →  2️⃣ 选配色  →  3️⃣ 生成图片  →  4️⃣ 创建PPT  →  5️⃣ QA检查
+                        </span>
+                    </div>
+                    
+                    <!-- 块6: examples -->
+                    <div style="background:rgba(236,72,153,0.1);border-left:3px solid #ec4899;padding:12px;margin-bottom:10px;border-radius:0 8px 8px 0;">
+                        <strong style="color:#ec4899;">6️⃣ Examples 示例</strong><br>
+                        <span style="color:#94a3b8;font-size:0.8rem;">
+                            告诉AI用户可能的问法，这样AI就能准确理解用户意图
+                        </span>
+                    </div>
+                </div>
+                
+                <p style="margin-top:20px;color:#e2e8f0;font-size:0.9rem;line-height:1.7;">
+                    💡 <strong>总结</strong>：一个完整的Skill就像一份<strong>完整的产品说明书</strong>，让AI知道：<br>
+                    &nbsp;&nbsp;✔ 这个技能叫什么<br>
+                    &nbsp;&nbsp;✔ 什么时候用<br>
+                    &nbsp;&nbsp;✔ 可以用什么工具<br>
+                    &nbsp;&nbsp;✔ 具体怎么操作（步骤）<br>
+                    &nbsp;&nbsp;✔ 用户通常会怎么说
+                </p>
+            </div>
         </div>
         
         <div class="content-section fade-in" style="animation-delay: 0.2s; background: rgba(6, 182, 212, 0.08); border-color: rgba(6, 182, 212, 0.3);">
