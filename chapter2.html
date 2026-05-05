@@ -83,6 +83,30 @@
         .chat-item.ai .chat-text { background: rgba(255,255,255,0.08); border-bottom-left-radius: 4px; }
         .chat-item.user .chat-text { background: var(--cyan); color: white; border-bottom-right-radius: 4px; }
         
+        /* 预设动画聊天 */
+        .demo-chat {
+            background: #0a0a0a; border-radius: 12px; padding: 20px; min-height: 200px;
+        }
+        .demo-msg { margin-bottom: 15px; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; animation: slideIn 0.4s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+        .demo-msg.user { background: rgba(6, 182, 212, 0.2); text-align: right; margin-left: 30px; }
+        .demo-msg.ai { background: rgba(255,255,255,0.05); margin-right: 30px; }
+        .demo-msg .typing { display: inline-block; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+        
+        .demo-result { 
+            margin-top: 10px; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; 
+            border-left: 3px solid #10b981;
+            font-size: 0.85rem;
+        }
+        
+        .demo-label { 
+            font-size: 0.7rem; color: #10b981; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; 
+        }
+        
+        .toggle-btn { background: linear-gradient(135deg, #06b6d4, #0ea5e9); color: white; border: none; padding: 14px 28px; border-radius: 30px; font-size: 1rem; cursor: pointer; transition: all 0.3s; margin: 15px 0; }
+        .toggle-btn:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(6, 182, 212, 0.4); }
+        
         /* 对话区 */
         .realtime-section { margin: 25px 0; padding: 25px; background: rgba(6, 182, 212, 0.1); border: 2px solid rgba(6, 182, 212, 0.4); border-radius: 16px; }
         .realtime-header { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; }
@@ -186,22 +210,99 @@
             </div>
         </div>
         
-        <div class="content-section fade-in" style="animation-delay: 0.2s;">
-            <h3 class="section-title">📝 栗子：调用搜索工具</h3>
+        <!-- Skills 详解 -->
+        <div class="content-section fade-in" style="animation-delay: 0.15s;">
+            <h3 class="section-title">📚 Skills是什么？怎么创建？</h3>
             
-            <div class="example-box">
-                <div class="example-title">🔍 问虾虾一个需要搜索的问题</div>
+            <div style="background:#0a0a0a;border-radius:12px;padding:20px;margin-bottom:20px;">
+                <h4 style="color:#22d3ee;margin-bottom:15px;">🎯 Skills 的组成部分</h4>
                 
-                <div class="example-chat">
-                    <div class="chat-item user">
-                        <div class="chat-avatar">👦</div>
-                        <div class="chat-text">今天有什么新闻？</div>
-                    </div>
-                    <div class="chat-item ai">
-                        <div class="chat-avatar">🦐</div>
-                        <div class="chat-text">好的，我调用搜索工具查一下...<br>🔍 搜索中...<br><br>找到了！今日新闻：<br>1. AI技术新进展<br>2. 天气预报<br>3. 科技要闻</div>
-                    </div>
+                <!-- 动画图示：Skills结构 -->
+                <svg viewBox="0 0 500 200" style="width:100%;max-width:480px;margin:0 auto;display:block;">
+                    <!-- 背景 -->
+                    <rect x="10" y="10" width="480" height="180" rx="10" fill="#1e293b" stroke="#334155"/>
+                    
+                    <!-- 1. Name -->
+                    <rect x="30" y="30" width="120" height="40" rx="6" fill="#f59e0b"/>
+                    <text x="90" y="55" fill="#1e293b" font-size="12" text-anchor="middle" font-weight="bold">1️⃣ Name 名称</text>
+                    <text x="90" y="80" fill="#94a3b8" font-size="9" text-anchor="middle">技能名字，如"搜索"</text>
+                    
+                    <!-- 2. Description -->
+                    <rect x="170" y="30" width="150" height="40" rx="6" fill="#10b981"/>
+                    <text x="245" y="55" fill="#1e293b" font-size="12" text-anchor="middle" font-weight="bold">2️⃣ Description</text>
+                    <text x="245" y="80" fill="#94a3b8" font-size="9" text-anchor="middle">技能描述，什么场景用</text>
+                    
+                    <!-- 3. Tools -->
+                    <rect x="340" y="30" width="130" height="40" rx="6" fill="#8b5cf6"/>
+                    <text x="405" y="55" fill="#fff" font-size="12" text-anchor="middle" font-weight="bold">3️⃣ Tools 工具</text>
+                    <text x="405" y="80" fill="#94a3b8" font-size="9" text-anchor="middle">能调用的工具列表</text>
+                    
+                    <!-- 4. Instructions -->
+                    <rect x="30" y="110" width="200" height="50" rx="6" fill="#06b6d4"/>
+                    <text x="130" y="135" fill="#1e293b" font-size="12" text-anchor="middle" font-weight="bold">4️⃣ Instructions 指令</text>
+                    <text x="130" y="155" fill="#1e293b" font-size="10" text-anchor="middle">怎么使用这个技能</text>
+                    
+                    <!-- 5. Examples -->
+                    <rect x="250" y="110" width="220" height="50" rx="6" fill="#ec4899"/>
+                    <text x="360" y="135" fill="#fff" font-size="12" text-anchor="middle" font-weight="bold">5️⃣ Examples 示例</text>
+                    <text x="360" y="155" fill="#fff" font-size="10" text-anchor="middle">用户会怎么问</text>
+                    
+                    <!-- 连接线 -->
+                    <path d="M180,50 L170,50" stroke="#64748b" stroke-width="2" fill="none"/>
+                    <path d="M320,50 L340,50" stroke="#64748b" stroke-width="2" fill="none"/>
+                    <path d="M230,110 L230,80" stroke="#64748b" stroke-width="2" fill="none"/>
+                </svg>
+                
+                <div style="margin-top:20px;color:#94a3b8;font-size:0.9rem;line-height:1.8;">
+                    <p><strong style="color:#f59e0b;">📌 Name（名称）</strong> - 给技能起个名字，让大家知道这个技能叫什么</p>
+                    <p><strong style="color:#10b981;">📌 Description（描述）</strong> - 告诉AI什么时候该用这个技能</p>
+                    <p><strong style="color:#8b5cf6;">📌 Tools（工具）</strong> - 这个技能可以使用哪些工具（搜索、读文件、发邮件等）</p>
+                    <p><strong style="color:#06b6d4;">📌 Instructions（指令）</strong> - 详细的使用说明，AI按照这个来执行</p>
+                    <p><strong style="color:#ec4899;">📌 Examples（示例）</strong> - 给几个例子，让AI知道用户会怎么问</p>
                 </div>
+            </div>
+            
+            <!-- 创建Skills的示例 -->
+            <div style="background:#0a0a0a;border-radius:12px;padding:20px;">
+                <h4 style="color:#22d3ee;margin-bottom:15px;">✏️ 创建一个Search Skill的例子</h4>
+                
+                <pre style="background:#1e293b;padding:15px;border-radius:8px;overflow-x:auto;font-size:0.8rem;color:#e2e8f0;line-height:1.6;">
+## Search Skill
+
+**name**: search  
+**description**: 当用户需要搜索信息、查找资料时使用  
+**tools**: web_search, browser_open  
+**instructions**: |
+  1. 理解用户想搜索什么
+  2. 使用web_search工具搜索相关内容
+  3. 整理搜索结果，提取关键信息
+  4. 用简洁的语言回答用户
+
+**examples**: |
+  - "今天天气怎么样"  
+  - "帮我查一下北京到上海的机票"
+  - "最新的人工智能新闻"
+                </pre>
+                
+                <p style="margin-top:15px;color:#94a3b8;font-size:0.85rem;">
+                    💡 就像给小龙虾写了一本<strong>使用手册</strong>，告诉它：<br>
+                    - 这个技能叫什么<br>
+                    - 什么时候用<br>
+                    - 可以用什么工具<br>
+                    - 怎么使用<br>
+                    - 用户会怎么问
+                </p>
+            </div>
+        </div>
+        
+        <div class="content-section fade-in" style="animation-delay: 0.2s; background: rgba(6, 182, 212, 0.08); border-color: rgba(6, 182, 212, 0.3);">
+            <h3 class="section-title">🎬 虾虾的手脚展示</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px;">看！虾虾学会用工具做事啦~</p>
+            
+            <button class="toggle-btn" onclick="runDemo(); this.style.display='none'">▶️ 开始演示</button>
+            
+            <div class="demo-chat" id="demoChat">
+                <!-- 点击开始按钮后，这里会自动显示聊天记录 -->
             </div>
         </div>
         
@@ -227,6 +328,139 @@
     </div>
     
     <script>
+        // 预设动画聊天展示 - 真正调用API流式输出
+        async function addMessage(role, html) {
+            const chat = document.getElementById('demoChat');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'demo-msg ' + (role === 'user' ? 'user' : 'ai');
+            msgDiv.innerHTML = html;
+            chat.appendChild(msgDiv);
+            chat.scrollTop = 9999;
+        }
+
+        async function addResult(content) {
+            const chat = document.getElementById('demoChat');
+            const resultDiv = document.createElement('div');
+            resultDiv.innerHTML = content;
+            resultDiv.style.animation = 'slideIn 0.4s ease-out';
+            chat.appendChild(resultDiv);
+            chat.scrollTop = 9999;
+        }
+
+        // 流式输出文字
+        async function streamText(text) {
+            const chat = document.getElementById('demoChat');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'demo-msg ai';
+            chat.appendChild(msgDiv);
+            
+            let i = 0;
+            const speed = 30;
+            
+            return new Promise(resolve => {
+                function typeNext() {
+                    if (i < text.length) {
+                        msgDiv.innerHTML = text.substring(0, i+1).replace(/\n/g, '<br>') + '<span class="typing">▌</span>';
+                        i++;
+                        setTimeout(typeNext, speed);
+                    } else {
+                        msgDiv.innerHTML = text.replace(/\n/g, '<br>');
+                        chat.scrollTop = 9999;
+                        resolve();
+                    }
+                }
+                typeNext();
+            });
+        }
+
+        // 例子1：查天气
+        async function runWeatherExample() {
+            await addMessage('user', '请查一下今天海淀区的天气如何');
+            await new Promise(r => setTimeout(r, 500));
+            
+            try {
+                const resp = await fetch('https://yyt.s-flag.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            { role: 'system', content: '你是一个AI助手，擅长调用工具。遇到天气查询问题，先说明需要调用天气API，然后给出模拟的回答。' },
+                            { role: 'user', content: '请查一下今天海淀区的天气如何' }
+                        ]
+                    })
+                });
+                const data = await resp.json();
+                const reply = data.choices?.[0]?.message?.content || '我需要调用天气API来查询...';
+                await streamText('🔍 正在调用天气查询工具...\n\n' + reply);
+            } catch(e) {
+                await streamText('🔍 正在调用天气查询工具...\n\n📍 海淀区今日天气：\n☀️ 晴\n🌡️ 温度：18-25°C\n💨 风力：微风\n\n（演示：通过调用天气API获取实时数据）');
+            }
+            
+            setTimeout(runCalendarExample, 2500);
+        }
+
+        // 例子2：创建日历会议
+        async function runCalendarExample() {
+            await addMessage('user', '帮我新建一个明天下午3点在501会议室的讨论');
+            await new Promise(r => setTimeout(r, 500));
+            
+            try {
+                const resp = await fetch('https://yyt.s-flag.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            { role: 'system', content: '你是一个AI助手，擅长调用工具。遇到创建日历事件的问题，先说明需要调用日历API。' },
+                            { role: 'user', content: '帮我新建一个明天下午3点在501会议室的讨论' }
+                        ]
+                    })
+                });
+                const data = await resp.json();
+                const reply = data.choices?.[0]?.message?.content || '我将帮您创建日历...';
+                await streamText('📅 正在调用日历API...\n\n' + reply);
+            } catch(e) {
+                await streamText('📅 正在调用日历API...\n\n✅ 已创建会议！\n\n📋 会议详情：\n• 标题：讨论会议\n• 时间：明天 下午3:00\n• 地点：501会议室\n• 时长：1小时\n\n（演示：通过调用飞书/日历API创建）');
+            }
+            
+            setTimeout(runEmailExample, 2500);
+        }
+
+        // 例子3：查看并回复邮件
+        async function runEmailExample() {
+            await addMessage('user', '帮我看一下最新的邮件，如果有张教授的邮件，请直接回复');
+            await new Promise(r => setTimeout(r, 500));
+            
+            try {
+                const resp = await fetch('https://yyt.s-flag.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            { role: 'system', content: '你是一个AI助手，擅长调用工具。遇到邮件处理问题，先说明需要调用邮件API，然后模拟处理。' },
+                            { role: 'user', content: '帮我看一下最新的邮件，如果有张教授的邮件，请直接回复' }
+                        ]
+                    })
+                });
+                const data = await resp.json();
+                const reply = data.choices?.[0]?.message?.content || '让我查看邮件...';
+                await streamText('📧 正在调用邮件API...\n\n' + reply);
+            } catch(e) {
+                await streamText('📧 正在调用邮件API...\n\n📬 最新邮件：\n1. 张教授 - 关于下周研讨会\n2. 人力资源部 - 员工福利通知\n3. 市场部 - 本月工作总结\n\n找到张教授的邮件，正在自动回复...\n\n✅ 已回复张教授！\n\n📝 回复内容：\n"谢谢张教授的邀请，我会准时参加下周的研讨会，期待与您交流！"');
+            }
+            
+            setTimeout(async () => {
+                await addMessage('ai', '🎉 虾虾的手脚展示完毕！<br>这就是小龙虾手脚的超能力～<br>点击下方按钮可以继续和虾虾聊天哦！');
+            }, 1500);
+        }
+
+        // 开始演示
+        async function runDemo() {
+            runWeatherExample();
+        }
+
         async function sendMessage() {
             const input = document.getElementById('userMessage');
             const text = input.value.trim();
