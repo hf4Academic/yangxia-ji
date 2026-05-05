@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>养虾记 - 带你玩转AI</title>
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --secondary: #06b6d4;
+            --accent: #f472b6;
+            --dark: #0f172a;
+            --water: #e0f2fe;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(180deg, var(--dark) 0%, #1e3a5f 100%);
+            min-height: 100vh; color: white;
+        }
+
+        .ocean {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute; bottom: 0; left: 0; width: 200%; height: 200px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath fill='%230ea5e920' d='M0,60 C300,150 600,0 900,90 C1200,180 1200,60 1200,60 L1200,120 L0,120 Z'/%3E%3C/svg%3E") repeat-x;
+            animation: wave 8s linear infinite;
+        }
+
+        @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .container { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+
+        .hero { text-align: center; padding: 40px 0 30px; animation: fadeIn 1s ease-out; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero h1 {
+            font-size: 3rem; margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .hero .subtitle { font-size: 1.2rem; color: #94a3b8; margin-bottom: 30px; }
+
+        .shrimp-container {
+            position: relative; width: 150px; height: 150px; margin: 0 auto 25px;
+        }
+
+        .shrimp { font-size: 90px; animation: swim 3s ease-in-out infinite; filter: drop-shadow(0 10px 30px rgba(14, 165, 233, 0.5)); }
+
+        @keyframes swim { 0%, 100% { transform: translateX(-15px) rotate(-3deg); } 50% { transform: translateX(15px) rotate(3deg); } }
+
+        /* 进化进度 */
+        .evolution-section { margin: 40px 0; padding: 30px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; }
+        
+        .evolution-title { text-align: center; font-size: 1.3rem; margin-bottom: 25px; }
+
+        .evolution-steps { display: flex; flex-direction: column; gap: 10px; }
+
+        .evolution-step {
+            display: flex; align-items: center; gap: 15px; padding: 15px 20px;
+            background: rgba(255,255,255,0.03); border-radius: 12px; transition: all 0.3s;
+            text-decoration: none; color: inherit;
+        }
+
+        .evolution-step:hover { background: rgba(255,255,255,0.08); transform: translateX(5px); }
+
+        .step-num {
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 0.9rem; flex-shrink: 0;
+        }
+
+        .step-1 .step-num { background: linear-gradient(135deg, #8b5cf6, #a855f7); }
+        .step-2 .step-num { background: linear-gradient(135deg, #06b6d4, #0ea5e9); }
+        .step-3 .step-num { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .step-4 .step-num { background: linear-gradient(135deg, #ec4899, #f472b6); }
+        .step-5 .step-num { background: linear-gradient(135deg, #10b981, #34d399); }
+
+        .step-content { flex: 1; }
+        .step-title { font-size: 1rem; margin-bottom: 3px; }
+        .step-desc { font-size: 0.8rem; color: #64748b; }
+
+        .step-arrow { color: #475569; font-size: 1.2rem; }
+
+        /* 总结页入口 */
+        .summary-section {
+            margin: 30px 0; padding: 30px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(244, 114, 182, 0.15));
+            border: 2px solid rgba(251, 191, 36, 0.3); border-radius: 20px;
+            text-align: center;
+        }
+
+        .summary-section h2 { font-size: 1.4rem; margin-bottom: 15px; color: var(--accent); }
+        .summary-section p { color: #94a3b8; margin-bottom: 20px; }
+
+        .summary-btn {
+            display: inline-block; padding: 15px 35px;
+            background: linear-gradient(135deg, var(--accent), #ec4899);
+            color: white; border-radius: 30px; text-decoration: none;
+            font-size: 1.1rem; transition: all 0.3s;
+        }
+
+        .summary-btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(244, 114, 182, 0.4); }
+
+        .tip { text-align: center; margin-top: 30px; color: #64748b; font-size: 0.9rem; }
+        .tip span { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="ocean">
+        <div class="wave"></div>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <h1>🫧 养虾记</h1>
+            <p class="subtitle">带你一步步把"龙虾"变得更厉害！</p>
+            
+            <div class="shrimp-container">
+                <div class="shrimp">🦐</div>
+            </div>
+        </div>
+
+        <div class="evolution-section">
+            <h2 class="evolution-title">🦐 龙虾的进化之旅</h2>
+            
+            <div class="evolution-steps">
+                <a href="chapter1.html" class="evolution-step step-1">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <div class="step-title">🧠 龙虾的大脑</div>
+                        <div class="step-desc">大模型 + 多模态（文生图、文生视频）</div>
+                    </div>
+                    <span class="step-arrow">→</span>
+                </a>
+
+                <a href="chapter2.html" class="evolution-step step-2">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <div class="step-title">✋ 龙虾的手脚</div>
+                        <div class="step-desc">Skills工具（搜索、文档、文件操作）</div>
+                    </div>
+                    <span class="step-arrow">→</span>
+                </a>
+
+                <a href="chapter3.html" class="evolution-step step-3">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <div class="step-title">🦀 龙虾的身体</div>
+                        <div class="step-desc">飞书接入 + 多模态输入（语音、图片）</div>
+                    </div>
+                    <span class="step-arrow">→</span>
+                </a>
+
+                <a href="chapter4.html" class="evolution-step step-4">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <div class="step-title">👻 龙虾的灵魂</div>
+                        <div class="step-desc">Memory记忆 + Soul人格</div>
+                    </div>
+                    <span class="step-arrow">→</span>
+                </a>
+
+                <a href="chapter5.html" class="evolution-step step-5">
+                    <div class="step-num">5</div>
+                    <div class="step-content">
+                        <div class="step-title">🧩 龙虾的方法</div>
+                        <div class="step-desc">Agent自我规划 + 复杂任务</div>
+                    </div>
+                    <span class="step-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h2>🏆 每个人的特殊龙虾</h2>
+            <p>教授、学生、警察...每个人的龙虾都不同！</p>
+            <a href="summary.html" class="summary-btn">🎓 看看你的龙虾</a>
+        </div>
+
+        <p class="tip">点击任意章节开始<span>探索</span> 🦐</p>
+    </div>
+</body>
+</html>

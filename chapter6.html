@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第6章 终极形态 - 控制万物 | 养虾记</title>
+    <style>
+        :root {
+            --gold: #fbbf24;
+            --cyan: #22d3ee;
+            --purple: #a855f7;
+            --pink: #f472b6;
+            --dark: #030712;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: radial-gradient(ellipse at 50% 30%, #0c1929 0%, #030712 60%, #010409 100%);
+            min-height: 100vh; color: white;
+        }
+
+        .cosmos {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+        }
+
+        .stars {
+            position: absolute; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 10px 10px, white, transparent),
+                radial-gradient(2px 2px at 100px 50px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 200px 150px, white, transparent),
+                radial-gradient(2px 2px at 300px 30px, rgba(168,85,247,0.8), transparent);
+            background-size: 800px 300px; animation: starMove 100s linear infinite;
+        }
+
+        @keyframes starMove { from { transform: translateY(0); } to { transform: translateY(-300px); } }
+
+        .container { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; padding: 20px; }
+
+        .back-btn {
+            position: fixed; top: 20px; left: 20px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
+            color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; z-index: 100;
+        }
+
+        /* 顶部 */
+        .hero-section {
+            text-align: center; padding: 30px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px;
+        }
+
+        .shrimp-name {
+            font-size: 1.3rem; margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff, var(--gold), var(--cyan), var(--purple));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .shrimp-desc { font-size: 0.9rem; color: #94a3b8; margin-bottom: 20px; }
+
+        .shrimp-container { width: 140px; height: 140px; margin: 0 auto 20px; position: relative; }
+        
+        .orbit-ring {
+            position: absolute; top: 50%; left: 50%;
+            width: 180px; height: 180px;
+            border: 2px dashed rgba(251,191,36,0.3);
+            border-radius: 50%; transform: translate(-50%, -50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .orbit-ring:nth-child(2) { width: 160px; height: 160px; border-color: rgba(34,211,238,0.3); animation-duration: 15s; animation-direction: reverse; }
+
+        .orbit-item {
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            font-size: 24px;
+        }
+
+        @keyframes rotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        .shrimp { 
+            font-size: 80px; position: absolute; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            filter: drop-shadow(0 0 30px var(--gold));
+            animation: ultimatePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes ultimatePulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .progress-bar {
+            height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;
+            overflow: hidden; max-width: 400px; margin: 0 auto 10px;
+            box-shadow: 0 0 20px rgba(251,191,36,0.3);
+        }
+
+        .progress-fill {
+            height: 100%; width: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--cyan), var(--purple), var(--pink));
+            border-radius: 5px; animation: rainbow 3s linear infinite;
+            background-size: 300% 100%;
+        }
+
+        @keyframes rainbow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+
+        .progress-text { font-size: 0.85rem; color: var(--gold); font-weight: bold; }
+
+        /* 中部 */
+        .chat-demo-section {
+            margin: 30px 0; padding: 25px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(251,191,36,0.3);
+            border-radius: 20px;
+        }
+
+        .section-title { text-align: center; font-size: 1.3rem; margin-bottom: 20px; color: var(--cyan); }
+
+        .chat-container { background: #0a0a0a; border-radius: 16px; padding: 20px; max-height: 400px; overflow-y: auto; }
+
+        .chat-message {
+            display: flex; gap: 12px; margin-bottom: 20px;
+            animation: fadeInUp 0.5s ease-out forwards; opacity: 0;
+        }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-message.user { flex-direction: row-reverse; }
+
+        .chat-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .chat-message.ai .chat-avatar { background: linear-gradient(135deg, var(--gold), var(--cyan)); }
+        .chat-message.user .chat-avatar { background: var(--purple); }
+
+        .chat-bubble { max-width: 70%; padding: 12px 18px; border-radius: 16px; line-height: 1.5; }
+        .chat-message.ai .chat-bubble { 
+            background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(34,211,238,0.2)); 
+            border-bottom-left-radius: 4px; 
+        }
+        .chat-message.user .chat-bubble { background: var(--purple); color: white; border-bottom-right-radius: 4px; }
+
+        /* 底部 */
+        .realtime-section {
+            margin: 30px 0; padding: 25px;
+            background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(34,211,238,0.1));
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+        }
+
+        .realtime-header { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .live-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .realtime-chat { background: #0a0a0a; border-radius: 16px; padding: 15px; max-height: 300px; overflow-y: auto; margin-bottom: 15px; }
+        .realtime-msg { margin-bottom: 12px; padding: 10px 15px; border-radius: 12px; }
+        .realtime-msg.ai { background: rgba(251,191,36,0.1); }
+        .realtime-msg.user { background: rgba(34,211,238,0.2); text-align: right; }
+
+        .device-icons {
+            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
+            margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px;
+        }
+
+        .device-icon { font-size: 28px; opacity: 0.7; transition: all 0.3s; }
+        .device-icon:hover { opacity: 1; transform: scale(1.2); }
+
+        .input-area { display: flex; gap: 10px; margin-top: 15px; }
+        .input-area input { flex: 1; padding: 14px 20px; border-radius: 25px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 1rem; outline: none; }
+        .input-area input:focus { border-color: var(--gold); }
+        .input-area button { padding: 14px 25px; border-radius: 25px; border: none; background: linear-gradient(135deg, var(--gold), var(--cyan)); color: #030712; font-size: 1rem; cursor: pointer; font-weight: bold; }
+        .input-area button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .nav-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
+        .nav-btn { padding: 12px 25px; border-radius: 10px; text-decoration: none; font-size: 0.95rem; }
+        .nav-btn.primary { background: linear-gradient(135deg, var(--gold), var(--cyan)); color: #030712; }
+        .nav-btn.secondary { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; }
+    </style>
+</head>
+<body>
+    <div class="cosmos"><div class="stars"></div></div>
+    <a href="index.html" class="back-btn">← 返回主页</a>
+
+    <div class="container">
+        <div class="hero-section fadeInUp">
+            <div class="shrimp-name">✨ 终极虾</div>
+            <div class="shrimp-desc">可以控制机器人、3D打印机、智能家居！</div>
+            
+            <div class="shrimp-container">
+                <div class="orbit-ring">
+                    <span class="orbit-item">🤖</span>
+                </div>
+                <div class="orbit-ring">
+                    <span class="orbit-item">🖨️</span>
+                </div>
+                <span class="shrimp">🦐</span>
+            </div>
+
+            <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+            <div class="progress-text">★ 终极形态 · 100% ★</div>
+        </div>
+
+        <div class="chat-demo-section fadeInUp" style="animation-delay: 0.2s;">
+            <h3 class="section-title">💬 看看终极虾能做什么</h3>
+            <div class="chat-container" id="demoChat"></div>
+        </div>
+
+        <div class="realtime-section fadeInUp" style="animation-delay: 0.4s;">
+            <div class="realtime-header">
+                <span class="live-dot"></span>
+                <h3>🤖 和终极虾对话</h3>
+            </div>
+            <div class="realtime-chat" id="realtimeChat">
+                <div class="realtime-msg ai">✨ 我进化到终极形态啦！现在可以控制万物！机器人、3D打印机、智能家居...</div>
+            </div>
+            <div class="device-icons">
+                <span class="device-icon">🤖</span>
+                <span class="device-icon">🖨️</span>
+                <span class="device-icon">🏠</span>
+                <span class="device-icon">🚗</span>
+                <span class="device-icon">🎮</span>
+                <span class="device-icon">🔬</span>
+            </div>
+            <div class="input-area">
+                <input type="text" id="userMessage" placeholder="输入消息..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()" id="sendBtn">发送</button>
+            </div>
+        </div>
+
+        <div class="nav-buttons fadeInUp" style="animation-delay: 0.6s;">
+            <a href="index.html" class="nav-btn primary">🏠 回到起点重新开始</a>
+            <a href="chapter5.html" class="nav-btn secondary">← 上一章</a>
+        </div>
+    </div>
+
+    <script>
+        const demoMessages = [
+            { role: 'user', text: '帮我打开客厅灯', avatar: '👦' },
+            { role: 'ai', text: '💡 已打开客厅灯！', avatar: '🦐' },
+            { role: 'user', text: '帮我3D打印一个小猫', avatar: '👦' },
+            { role: 'ai', text: '🖨️ 收到！正在3D打印小猫... 完成啦！🐱', avatar: '🦐' },
+            { role: 'user', text: '让机器人帮我做饭', avatar: '👦' },
+            { role: 'ai', text: '🍳 指挥机器人做饭中... 香喷喷的蛋炒饭做好啦！', avatar: '🦐' },
+        ];
+
+        async function playDemoChat() {
+            const container = document.getElementById('demoChat');
+            for (let i = 0; i < demoMessages.length; i++) {
+                const msg = demoMessages[i];
+                const div = document.createElement('div');
+                div.className = `chat-message ${msg.role}`;
+                div.innerHTML = `<div class="chat-avatar">${msg.avatar}</div><div class="chat-bubble">${msg.text}</div>`;
+                container.appendChild(div);
+                container.scrollTop = container.scrollHeight;
+                if (i < demoMessages.length - 1) await new Promise(r => setTimeout(r, 1500));
+            }
+        }
+        setTimeout(playDemoChat, 500);
+
+        const simpleResponses = {
+            '你好': '✨ 你好！我是终极虾！',
+            '棒': '😊 谢谢你！这就是AI的进化终点吗？不，这才是开始！',
+            '控制': '🤖 我现在能控制：机器人、3D打印机、智能家居、汽车、游戏...',
+            '灯': '💡 好的！开灯！',
+            '打印': '🖨️ 3D打印任务已下达！',
+            '机器人': '🍳 指挥机器人工作中...',
+            '拜拜': '👋 再见！记得回来看我进化！',
+            '拜': '👋 再见！',
+        };
+
+        function getResponse(input) {
+            input = input.toLowerCase();
+            for (let key in simpleResponses) {
+                if (input.includes(key)) return simpleResponses[key];
+            }
+            return '🤖 终极虾听从你的命令！试试说"开灯"、"打印"或"机器人"！';
+        }
+
+        function addMsg(text, isUser) {
+            const div = document.createElement('div');
+            div.className = `realtime-msg ${isUser ? 'user' : 'ai'}`;
+            div.textContent = text;
+            document.getElementById('realtimeChat').appendChild(div);
+            document.getElementById('realtimeChat').scrollTop = 9999;
+        }
+
+        async function sendMessage() {
+            const text = document.getElementById('userMessage').value.trim();
+            if (!text) return;
+            addMsg(text, true);
+            document.getElementById('userMessage').value = '';
+            document.getElementById('sendBtn').disabled = true;
+            await new Promise(r => setTimeout(r, 1000));
+            addMsg(getResponse(text), false);
+            document.getElementById('sendBtn').disabled = false;
+        }
+
+        function handleKeyPress(e) { if (e.key === 'Enter') sendMessage(); }
+    </script>
+</body>
+</html>

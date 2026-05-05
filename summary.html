@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每个人的特殊龙虾 | 养虾记</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(180deg, #1e1b4b 0%, #0f0a1e 50%, #02010f 100%);
+            min-height: 100vh; color: white;
+        }
+
+        .cosmos { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+
+        .stars {
+            position: absolute; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 50px 50px, white, transparent),
+                radial-gradient(2px 2px at 150px 100px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 300px 80px, white, transparent),
+                radial-gradient(2px 2px at 450px 200px, rgba(251,191,36,0.8), transparent);
+            background-size: 500px 300px;
+        }
+
+        .container { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+
+        .back-btn { position: fixed; top: 20px; left: 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; z-index: 100; }
+
+        /* 顶部 */
+        .header { text-align: center; padding: 30px 0 40px; }
+
+        .title { font-size: 2.5rem; margin-bottom: 15px; background: linear-gradient(135deg, #fbbf24, #f59e0b, #ec4899, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .subtitle { font-size: 1.2rem; color: #94a3b8; max-width: 600px; margin: 0 auto; }
+
+        /* 进化回顾 */
+        .review-section {
+            margin: 40px 0; padding: 30px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+        }
+
+        .review-title { text-align: center; font-size: 1.4rem; margin-bottom: 25px; }
+
+        .evolution-timeline {
+            display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px;
+        }
+
+        .timeline-item {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.05); padding: 12px 18px; border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .timeline-item:hover { transform: scale(1.05); background: rgba(255,255,255,0.1); }
+
+        .timeline-icon { font-size: 1.5rem; }
+        .timeline-label { font-size: 0.85rem; color: #94a3b8; }
+        .timeline-arrow { color: #64748b; font-size: 1.2rem; }
+
+        /* 不同龙虾展示 */
+        .shrimps-section { margin: 40px 0; }
+
+        .shrimps-title { text-align: center; font-size: 1.5rem; margin-bottom: 30px; }
+
+        .shrimp-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+
+        .shrimp-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 30px;
+            text-align: center; transition: all 0.4s;
+        }
+
+        .shrimp-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+
+        .shrimp-card.professor { border-color: rgba(139, 92, 246, 0.5); }
+        .shrimp-card.student { border-color: rgba(6, 182, 212, 0.5); }
+        .shrimp-card.police { border-color: rgba(239, 68, 68, 0.5); }
+        .shrimp-card.custom { border-color: rgba(251, 191, 36, 0.5); }
+
+        .card-shrimp { font-size: 4rem; margin-bottom: 15px; animation: bounce 2s ease-in-out infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        .shrimp-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .professor h3 { color: #a855f7; }
+        .student h3 { color: #06b6d4; }
+        .police h3 { color: #ef4444; }
+        .custom h3 { color: #fbbf24; }
+
+        .shrimp-card .role { font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px; }
+
+        .shrimp-features { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+
+        .feature-tag {
+            background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 15px;
+            font-size: 0.75rem; color: #cbd5e1;
+        }
+
+        .shrimp-dialogue {
+            background: #0a0a0a; border-radius: 12px; padding: 15px; text-align: left; font-size: 0.85rem;
+        }
+
+        .dialogue-line { margin-bottom: 8px; }
+        .dialogue-line:last-child { margin-bottom: 0; }
+        .dialogue-user { color: #94a3b8; }
+        .dialogue-ai { color: #22d3ee; }
+
+        /* 成长动画 */
+        .growth-section { margin: 50px 0; padding: 30px; background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(236,72,153,0.1)); border: 2px solid rgba(255,255,255,0.2); border-radius: 20px; }
+
+        .growth-title { text-align: center; font-size: 1.4rem; margin-bottom: 25px; }
+
+        .growth-demo { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+
+        .growth-stage {
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .growth-stage:hover { transform: scale(1.1); }
+
+        .growth-icon { font-size: 3rem; margin-bottom: 8px; }
+        .growth-label { font-size: 0.85rem; color: #94a3b8; }
+        .growth-arrow { font-size: 2rem; color: #64748b; align-self: center; }
+
+        /* 结尾 */
+        .ending-section { text-align: center; margin: 50px 0; padding: 40px; }
+
+        .ending-text { font-size: 1.3rem; line-height: 2; color: #94a3b8; max-width: 600px; margin: 0 auto 30px; }
+        .highlight { color: #fbbf24; font-weight: bold; }
+
+        .restart-btn {
+            display: inline-block; padding: 18px 40px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a2e; border-radius: 30px; text-decoration: none;
+            font-size: 1.1rem; font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .restart-btn:hover { transform: scale(1.05); box-shadow: 0 10px 40px rgba(251, 191, 36, 0.4); }
+
+        .fade-in { animation: fadeInUp 0.6s ease-out forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="cosmos"><div class="stars"></div></div>
+    <a href="index.html" class="back-btn">← 返回主页</a>
+
+    <div class="container">
+        <div class="header fade-in">
+            <h1 class="title">🏆 每个人的特殊龙虾</h1>
+            <p class="subtitle">不同的职业、不同的习惯，让每只龙虾都独一无二！</p>
+        </div>
+
+        <!-- 进化回顾 -->
+        <div class="review-section fade-in" style="animation-delay: 0.1s;">
+            <h2 class="review-title">🦐 龙虾的进化之旅</h2>
+            <div class="evolution-timeline">
+                <div class="timeline-item">
+                    <span class="timeline-icon">🧠</span>
+                    <span class="timeline-label">大脑</span>
+                </div>
+                <span class="timeline-arrow">→</span>
+                <div class="timeline-item">
+                    <span class="timeline-icon">✋</span>
+                    <span class="timeline-label">手脚</span>
+                </div>
+                <span class="timeline-arrow">→</span>
+                <div class="timeline-item">
+                    <span class="timeline-icon">🦀</span>
+                    <span class="timeline-label">身体</span>
+                </div>
+                <span class="timeline-arrow">→</span>
+                <div class="timeline-item">
+                    <span class="timeline-icon">👻</span>
+                    <span class="timeline-label">灵魂</span>
+                </div>
+                <span class="timeline-arrow">→</span>
+                <div class="timeline-item">
+                    <span class="timeline-icon">🧩</span>
+                    <span class="timeline-label">方法</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 不同职业的龙虾 -->
+        <div class="shrimps-section fade-in" style="animation-delay: 0.2s;">
+            <h2 class="shrimps-title">👔 看看不同人的龙虾</h2>
+            
+            <div class="shrimp-cards">
+                <!-- 教授龙虾 -->
+                <div class="shrimp-card professor">
+                    <div class="card-shrimp">🧙🦐</div>
+                    <h3>教授的龙虾</h3>
+                    <div class="role">🧠 知识渊博、耐心讲解</div>
+                    <div class="shrimp-features">
+                        <span class="feature-tag">📚 学术</span>
+                        <span class="feature-tag">📖 详细解释</span>
+                        <span class="feature-tag">🎓 教学</span>
+                    </div>
+                    <div class="shrimp-dialogue">
+                        <div class="dialogue-line"><span class="dialogue-user">User: 什么是大模型？</span></div>
+                        <div class="dialogue-line"><span class="dialogue-ai">AI: 好问题！让我详细解释一下...</span></div>
+                    </div>
+                </div>
+
+                <!-- 学生龙虾 -->
+                <div class="shrimp-card student">
+                    <div class="card-shrimp">🎓🦐</div>
+                    <h3>学生的龙虾</h3>
+                    <div class="role">📚 活泼好学、轻松有趣</div>
+                    <div class="shrimp-features">
+                        <span class="feature-tag">💡 创意</span>
+                        <span class="feature-tag">🎮 有趣</span>
+                        <span class="feature-tag">📝 作业</span>
+                    </div>
+                    <div class="shrimp-dialogue">
+                        <div class="dialogue-line"><span class="dialogue-user">User: 帮我做作业</span></div>
+                        <div class="dialogue-line"><span class="dialogue-ai">AI: 哈哈好嘞！但你得先自己想想哦~</span></div>
+                    </div>
+                </div>
+
+                <!-- 警察龙虾 -->
+                <div class="shrimp-card police">
+                    <div class="card-shrimp">👮🦐</div>
+                    <h3>警察的龙虾</h3>
+                    <div class="role">⚖️ 严谨正直、注重安全</div>
+                    <div class="shrimp-features">
+                        <span class="feature-tag">🔒 安全</span>
+                        <span class="feature-tag">📋 规范</span>
+                        <span class="feature-tag">🛡️ 防护</span>
+                    </div>
+                    <div class="shrimp-dialogue">
+                        <div class="dialogue-line"><span class="dialogue-user">User: 帮我破解密码</span></div>
+                        <div class="dialogue-line"><span class="dialogue-ai">AI: 抱歉，这不符合规定！</span></div>
+                    </div>
+                </div>
+
+                <!-- 你的龙虾 -->
+                <div class="shrimp-card custom">
+                    <div class="card-shrimp">⭐🦐</div>
+                    <h3>你的龙虾</h3>
+                    <div class="role">✨ 独一无二的AI伙伴</div>
+                    <div class="shrimp-features">
+                        <span class="feature-tag">💖 了解你</span>
+                        <span class="feature-tag">🎯 记住偏好</span>
+                        <span class="feature-tag">🌟 你的风格</span>
+                    </div>
+                    <div class="shrimp-dialogue">
+                        <div class="dialogue-line"><span class="dialogue-user">User: 今天干嘛</span></div>
+                        <div class="dialogue-line"><span class="dialogue-ai">AI: 记得你最近在学AI，要么继续？</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成长动画 -->
+        <div class="growth-section fade-in" style="animation-delay: 0.4s;">
+            <h2 class="growth-title">🎬 龙虾成长的样子</h2>
+            <div class="growth-demo">
+                <div class="growth-stage">
+                    <div class="growth-icon">🦐</div>
+                    <div class="growth-label">刚出生</div>
+                </div>
+                <span class="growth-arrow">→</span>
+                <div class="growth-stage">
+                    <div class="growth-icon">🦐👂</div>
+                    <div class="growth-label">长耳朵</div>
+                </div>
+                <span class="growth-arrow">→</span>
+                <div class="growth-stage">
+                    <div class="growth-icon">🦐🧠</div>
+                    <div class="growth-label">有大脑</div>
+                </div>
+                <span class="growth-arrow">→</span>
+                <div class="growth-stage">
+                    <div class="growth-icon">🦐✋</div>
+                    <div class="growth-label">有手脚</div>
+                </div>
+                <span class="growth-arrow">→</span>
+                <div class="growth-stage">
+                    <div class="growth-icon">🦐💪</div>
+                    <div class="growth-label">有身体</div>
+                </div>
+                <span class="growth-arrow">→</span>
+                <div class="growth-stage">
+                    <div class="growth-icon">👻🦐✨</div>
+                    <div class="growth-label">有灵魂</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 结尾 -->
+        <div class="ending-section fade-in" style="animation-delay: 0.6s;">
+            <p class="ending-text">
+                恭喜你！<br>
+                你的龙虾从什么都不懂，<br>
+                到现在有了<strong>大脑、手脚、身体、灵魂、方法</strong>！<br><br>
+                它会一直陪伴你，记住你的喜好，<br>
+                成为你的<strong>特殊AI伙伴</strong>！
+            </p>
+            <a href="index.html" class="restart-btn">🔄 重新开始</a>
+        </div>
+    </div>
+</body>
+</html>

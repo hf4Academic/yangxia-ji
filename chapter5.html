@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第5章 龙虾的方法 | 养虾记</title>
+    <style>
+        :root { --green: #10b981; --primary: #34d399; --dark: #022c22; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(180deg, #022c22 0%, #064e3b 50%, #022c22 100%);
+            min-height: 100vh; color: white;
+        }
+        
+        .bg-pattern { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%); z-index: 0; }
+        
+        .container { position: relative; z-index: 1; max-width: 850px; margin: 0 auto; padding: 20px; }
+        
+        .back-btn { position: fixed; top: 20px; left: 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; z-index: 100; }
+        
+        /* 顶部 */
+        .hero-section { text-align: center; padding: 30px 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .shrimp-container { width: 130px; height: 130px; margin: 0 auto 15px; position: relative; }
+        .shrimp { font-size: 80px; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 10px 25px rgba(16, 185, 129, 0.5)); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        .gear-icon { position: absolute; font-size: 28px; animation: spin 10s linear infinite; }
+        .gear-1 { top: 0; right: -5px; }
+        .gear-2 { bottom: 5px; left: -10px; animation-direction: reverse; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        .shrimp-name { font-size: 1.4rem; margin-bottom: 8px; background: linear-gradient(135deg, #10b981, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .shrimp-desc { font-size: 0.95rem; color: #94a3b8; margin-bottom: 15px; max-width: 500px; margin: 0 auto 20px; }
+        
+        .shrimp-powers { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .power-tag { background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--green); }
+        
+        .progress-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; max-width: 300px; margin: 0 auto 10px; }
+        .progress-fill { height: 100%; width: 95%; background: linear-gradient(90deg, #10b981, #34d399); border-radius: 4px; }
+        .progress-text { font-size: 0.8rem; color: #64748b; }
+        
+        /* 内容 */
+        .content-section { margin: 25px 0; padding: 25px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; }
+        .section-title { font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        
+        /* Agent Loop */
+        .agent-intro { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        
+        .agent-card {
+            background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px; padding: 18px; text-align: center; transition: all 0.3s;
+        }
+        
+        .agent-card:hover { transform: translateY(-3px); }
+        .agent-icon { font-size: 2rem; margin-bottom: 10px; }
+        .agent-card h4 { color: var(--green); margin-bottom: 8px; font-size: 0.95rem; }
+        .agent-card p { font-size: 0.8rem; color: #94a3b8; }
+        
+        /* Agent Loop流程 */
+        .loop-flow { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        
+        .loop-step {
+            display: flex; align-items: center; gap: 15px;
+            background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px;
+            border-left: 3px solid var(--green);
+        }
+        
+        .loop-num { 
+            width: 30px; height: 30px; background: var(--green); color: #022c22; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            font-weight: bold; font-size: 0.9rem; flex-shrink: 0;
+        }
+        
+        .loop-info { flex: 1; }
+        .loop-name { font-size: 0.95rem; margin-bottom: 3px; }
+        .loop-desc { font-size: 0.75rem; color: #64748b; }
+        
+        .loop-arrow { font-size: 1.2rem; color: var(--green); }
+        
+        /* 栗子：写程序 */
+        .example-box { background: #0a0a0a; border-radius: 12px; padding: 20px; margin-top: 15px; }
+        .example-title { color: var(--green); font-size: 0.95rem; margin-bottom: 15px; font-weight: bold; }
+        
+        .code-demo { background: #1e1e1e; border-radius: 10px; padding: 15px; font-family: "SF Mono", monospace; font-size: 0.8rem; overflow-x: auto; }
+        .code-line { margin-bottom: 8px; }
+        .code-keyword { color: #c586c0; }
+        .code-func { color: #dcdcaa; }
+        .code-string { color: #ce9178; }
+        .code-comment { color: #6a9955; }
+        
+        /* 对话区 */
+        .realtime-section { margin: 25px 0; padding: 25px; background: rgba(16, 185, 129, 0.1); border: 2px solid rgba(16, 185, 129, 0.4); border-radius: 16px; }
+        .realtime-header { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .live-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; animation: pulse 1s infinite; }
+        
+        .realtime-chat { background: #0a0a0a; border-radius: 12px; padding: 15px; max-height: 200px; overflow-y: auto; margin-bottom: 12px; }
+        .realtime-msg { margin-bottom: 10px; padding: 8px 14px; border-radius: 10px; font-size: 0.85rem; }
+        .realtime-msg.ai { background: rgba(255,255,255,0.05); }
+        .realtime-msg.user { background: rgba(16, 185, 129, 0.2); text-align: right; }
+        
+        .input-area { display: flex; gap: 10px; }
+        .input-area input { flex: 1; padding: 12px 18px; border-radius: 25px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 0.95rem; outline: none; }
+        .input-area button { padding: 12px 22px; border-radius: 25px; border: none; background: var(--green); color: #022c22; font-size: 0.95rem; cursor: pointer; font-weight: bold; }
+        
+        /* 导航 */
+        .nav-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
+        .nav-btn { padding: 12px 25px; border-radius: 10px; text-decoration: none; font-size: 0.95rem; }
+        .nav-btn.primary { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1a1a2e; }
+        .nav-btn.secondary { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; }
+        
+        .fade-in { animation: fadeInUp 0.5s ease-out forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <a href="index.html" class="back-btn">← 返回主页</a>
+    
+    <div class="container">
+        <div class="hero-section fade-in">
+            <div class="shrimp-name">🧩 龙虾的方法</div>
+            <div class="shrimp-desc">Agent自我规划！龙虾学会了"思考方法"，能完成复杂任务——规划步骤、调用工具、自我反思！</div>
+            
+            <div class="shrimp-container">
+                <span class="gear-icon gear-1">⚙️</span>
+                <span class="gear-icon gear-2">🔧</span>
+                <div class="shrimp">🦐</div>
+            </div>
+            
+            <div class="shrimp-powers">
+                <span class="power-tag">🧠 自我规划</span>
+                <span class="power-tag">🔄 循环反思</span>
+                <span class="power-tag">🛠️ 工具调度</span>
+                <span class="power-tag">✅ 任务完成</span>
+            </div>
+            
+            <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
+            <div class="progress-text">进化阶段 5/5 · 95%</div>
+        </div>
+        
+        <div class="content-section fade-in" style="animation-delay: 0.1s;">
+            <h3 class="section-title">🔄 Agent Loop 自我规划</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px;">龙虾会自己思考如何完成任务：</p>
+            
+            <div class="loop-flow">
+                <div class="loop-step">
+                    <div class="loop-num">1</div>
+                    <div class="loop-info">
+                        <div class="loop-name">🤔 理解任务</div>
+                        <div class="loop-desc">理解用户要什么</div>
+                    </div>
+                </div>
+                <span class="loop-arrow">→</span>
+                <div class="loop-step">
+                    <div class="loop-num">2</div>
+                    <div class="loop-info">
+                        <div class="loop-name">📝 制定计划</div>
+                        <div class="loop-desc">规划需要的步骤</div>
+                    </div>
+                </div>
+                <span class="loop-arrow">→</span>
+                <div class="loop-step">
+                    <div class="loop-num">3</div>
+                    <div class="loop-info">
+                        <div class="loop-name">🔧 执行行动</div>
+                        <div class="loop-desc">调用工具执行</div>
+                    </div>
+                </div>
+                <span class="loop-arrow">→</span>
+                <div class="loop-step">
+                    <div class="loop-num">4</div>
+                    <div class="loop-info">
+                        <div class="loop-name">🔍 检查结果</div>
+                        <div class="loop-desc">反思做对了没</div>
+                    </div>
+                </div>
+                <span class="loop-arrow">↻</span>
+            </div>
+        </div>
+        
+        <div class="content-section fade-in" style="animation-delay: 0.2s;">
+            <h3 class="section-title">💻 栗子：写一个小程序</h3>
+            
+            <div class="example-box">
+                <div class="example-title">🐍 User: 帮我写一个猜数字游戏</div>
+                
+                <div class="code-demo">
+                    <div class="code-line"><span class="code-keyword">import</span> random</div>
+                    <div class="code-line">&nbsp;</div>
+                    <div class="code-line"><span class="code-comment"># 生成1-100的随机数</span></div>
+                    <div class="code-line">answer = random.<span class="code-func">randint</span>(<span class="code-string">1</span>, <span class="code-string">100</span>)</div>
+                    <div class="code-line">&nbsp;</div>
+                    <div class="code-line"><span class="code-keyword">for</span> i <span class="code-keyword">in</span> <span class="code-func">range</span>(<span class="code-string">10</span>):</div>
+                    <div class="code-line">    guess = <span class="code-func">int</span>(<span class="code-func">input</span>(<span class="code-string">"猜一个1-100的数字: "</span>))</div>
+                    <div class="code-line">    <span class="code-keyword">if</span> guess == answer:</div>
+                    <div class="code-line">        <span class="code-func">print</span>(<span class="code-string">"🎉 猜对了！答案就是"</span>, answer)</div>
+                    <div class="code-line">        <span class="code-keyword">break</span></div>
+                    <div class="code-line">    <span class="code-keyword">elif</span> guess < answer:</div>
+                    <div class="code-line">        <span class="code-func">print</span>(<span class="code-string">"太小了！"</span>)</div>
+                    <div class="code-line">    <span class="code-keyword">else</span>:</div>
+                    <div class="code-line">        <span class="code-func">print</span>(<span class="code-string">"太大了！"</span>)</div>
+                <div class="code-line"><span class="code-func">print</span>(<span class="code-string">"游戏结束！"</span>)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="realtime-section fade-in" style="animation-delay: 0.4s;">
+            <div class="realtime-header">
+                <span class="live-dot"></span>
+                <h3>🤖 试试让虾虾写程序</h3>
+            </div>
+            <div class="realtime-chat" id="realtimeChat">
+                <div class="realtime-msg ai">🧩 我学会方法了！可以帮你规划任务、写程序、解决复杂问题！试试吧~</div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="userMessage" placeholder="比如：帮我写一个计算器" onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">发送</button>
+            </div>
+        </div>
+        
+        <div class="nav-buttons fade-in" style="animation-delay: 0.6s;">
+            <a href="summary.html" class="nav-btn primary">🏆 看看你的龙虾</a>
+            <a href="chapter4.html" class="nav-btn secondary">← 上一章</a>
+            <a href="index.html" class="nav-btn secondary">🏠 主页</a>
+        </div>
+    </div>
+    
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('userMessage');
+            const text = input.value.trim();
+            if (!text) return;
+            
+            const chat = document.getElementById('realtimeChat');
+            const userDiv = document.createElement('div');
+            userDiv.className = 'realtime-msg user';
+            userDiv.textContent = text;
+            chat.appendChild(userDiv);
+            chat.scrollTop = 9999;
+            input.value = '';
+            
+            try {
+                const response = await fetch('https://yyt.s-flag.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            { role: 'system', content: '你是一个有方法的AI小龙虾，会规划任务、写程序。回复简短活泼。' },
+                            { role: 'user', content: text }
+                        ]
+                    })
+                });
+                const data = await response.json();
+                const reply = data.choices?.[0]?.message?.content || '...';
+                const aiDiv = document.createElement('div');
+                aiDiv.className = 'realtime-msg ai';
+                aiDiv.textContent = reply;
+                chat.appendChild(aiDiv);
+            } catch (e) {
+                const aiDiv = document.createElement('div');
+                aiDiv.className = 'realtime-msg ai';
+                aiDiv.textContent = '🧩 我在规划任务...（演示）';
+                chat.appendChild(aiDiv);
+            }
+            chat.scrollTop = 9999;
+        }
+        function handleKeyPress(e) { if (e.key === 'Enter') sendMessage(); }
+    </script>
+</body>
+</html>
