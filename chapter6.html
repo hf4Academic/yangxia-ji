@@ -3,295 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第6章 终极形态 - 控制万物 | 养虾记</title>
+    <title>第6章 龙虾的防御 | 养虾记</title>
     <style>
-        :root {
-            --gold: #fbbf24;
-            --cyan: #22d3ee;
-            --purple: #a855f7;
-            --pink: #f472b6;
-            --dark: #030712;
-        }
-
+        :root { --red: #ef4444; --primary: #f87171; --dark: #1a0a0a; }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        
         body {
             font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-            background: radial-gradient(ellipse at 50% 30%, #0c1929 0%, #030712 60%, #010409 100%);
+            background: linear-gradient(180deg, #1a0a0a 0%, #2a1010 50%, #1a0a0a 100%);
             min-height: 100vh; color: white;
         }
-
-        .cosmos {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
-        }
-
-        .stars {
-            position: absolute; width: 100%; height: 100%;
-            background-image: 
-                radial-gradient(2px 2px at 10px 10px, white, transparent),
-                radial-gradient(2px 2px at 100px 50px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 200px 150px, white, transparent),
-                radial-gradient(2px 2px at 300px 30px, rgba(168,85,247,0.8), transparent);
-            background-size: 800px 300px; animation: starMove 100s linear infinite;
-        }
-
-        @keyframes starMove { from { transform: translateY(0); } to { transform: translateY(-300px); } }
-
-        .container { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; padding: 20px; }
-
-        .back-btn {
-            position: fixed; top: 20px; left: 20px;
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
-            color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; z-index: 100;
-        }
-
-        /* 顶部 */
-        .hero-section {
-            text-align: center; padding: 30px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px;
-        }
-
-        .shrimp-name {
-            font-size: 1.3rem; margin-bottom: 8px;
-            background: linear-gradient(135deg, #fff, var(--gold), var(--cyan), var(--purple));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        .shrimp-desc { font-size: 0.9rem; color: #94a3b8; margin-bottom: 20px; }
-
-        .shrimp-container { width: 140px; height: 140px; margin: 0 auto 20px; position: relative; }
         
-        .orbit-ring {
-            position: absolute; top: 50%; left: 50%;
-            width: 180px; height: 180px;
-            border: 2px dashed rgba(251,191,36,0.3);
-            border-radius: 50%; transform: translate(-50%, -50%);
-            animation: rotate 20s linear infinite;
+        .danger-bg { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: radial-gradient(ellipse at 30% 20%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(239, 68, 68, 0.1) 0%, transparent 50%);
+            z-index: 0; 
         }
-
-        .orbit-ring:nth-child(2) { width: 160px; height: 160px; border-color: rgba(34,211,238,0.3); animation-duration: 15s; animation-direction: reverse; }
-
-        .orbit-item {
-            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-            font-size: 24px;
+        
+        .container { position: relative; z-index: 1; max-width: 850px; margin: 0 auto; padding: 20px; }
+        
+        .back-btn { position: fixed; top: 20px; left: 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; z-index: 100; }
+        
+        /* 顶部 */
+        .hero-section { text-align: center; padding: 30px 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .shrimp-container { width: 130px; height: 130px; margin: 0 auto 15px; position: relative; }
+        .shrimp { font-size: 80px; animation: shake 0.5s ease-in-out infinite; filter: drop-shadow(0 10px 25px rgba(239, 68, 68, 0.5)); }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-3px) rotate(-2deg); }
+            75% { transform: translateX(3px) rotate(2deg); }
         }
-
-        @keyframes rotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
-
-        .shrimp { 
-            font-size: 80px; position: absolute; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); 
-            filter: drop-shadow(0 0 30px var(--gold));
-            animation: ultimatePulse 2s ease-in-out infinite;
+        
+        .shield-icon { position: absolute; font-size: 36px; animation: pulse 1.5s ease-in-out infinite; }
+        .shield-1 { top: -10px; right: -10px; }
+        .shield-2 { bottom: 0; left: -15px; }
+        
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } }
+        
+        .shrimp-name { font-size: 1.4rem; margin-bottom: 8px; background: linear-gradient(135deg, #ef4444, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .shrimp-desc { font-size: 0.95rem; color: #94a3b8; margin-bottom: 15px; max-width: 500px; margin: 0 auto 20px; }
+        
+        .shrimp-powers { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .power-tag { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--red); }
+        
+        .progress-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; max-width: 300px; margin: 0 auto 10px; }
+        .progress-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #ef4444, #f87171); border-radius: 4px; }
+        .progress-text { font-size: 0.8rem; color: #64748b; }
+        
+        /* 内容 */
+        .content-section { margin: 25px 0; padding: 25px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; }
+        .section-title { font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        
+        /* 威胁展示 */
+        .threat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        
+        .threat-card {
+            background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px; padding: 20px; text-align: center; transition: all 0.3s;
         }
-
-        @keyframes ultimatePulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-        }
-
-        .progress-bar {
-            height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;
-            overflow: hidden; max-width: 400px; margin: 0 auto 10px;
-            box-shadow: 0 0 20px rgba(251,191,36,0.3);
-        }
-
-        .progress-fill {
-            height: 100%; width: 100%;
-            background: linear-gradient(90deg, var(--gold), var(--cyan), var(--purple), var(--pink));
-            border-radius: 5px; animation: rainbow 3s linear infinite;
-            background-size: 300% 100%;
-        }
-
-        @keyframes rainbow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
-
-        .progress-text { font-size: 0.85rem; color: var(--gold); font-weight: bold; }
-
-        /* 中部 */
-        .chat-demo-section {
-            margin: 30px 0; padding: 25px;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(251,191,36,0.3);
-            border-radius: 20px;
-        }
-
-        .section-title { text-align: center; font-size: 1.3rem; margin-bottom: 20px; color: var(--cyan); }
-
-        .chat-container { background: #0a0a0a; border-radius: 16px; padding: 20px; max-height: 400px; overflow-y: auto; }
-
-        .chat-message {
-            display: flex; gap: 12px; margin-bottom: 20px;
-            animation: fadeInUp 0.5s ease-out forwards; opacity: 0;
-        }
-
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .chat-message.user { flex-direction: row-reverse; }
-
-        .chat-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-        .chat-message.ai .chat-avatar { background: linear-gradient(135deg, var(--gold), var(--cyan)); }
-        .chat-message.user .chat-avatar { background: var(--purple); }
-
-        .chat-bubble { max-width: 70%; padding: 12px 18px; border-radius: 16px; line-height: 1.5; }
-        .chat-message.ai .chat-bubble { 
-            background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(34,211,238,0.2)); 
-            border-bottom-left-radius: 4px; 
-        }
-        .chat-message.user .chat-bubble { background: var(--purple); color: white; border-bottom-right-radius: 4px; }
-
-        /* 底部 */
-        .realtime-section {
-            margin: 30px 0; padding: 25px;
-            background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(34,211,238,0.1));
-            border: 2px solid var(--gold);
-            border-radius: 20px;
-        }
-
-        .realtime-header { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        
+        .threat-card:hover { transform: translateY(-3px); }
+        .threat-icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .threat-card h4 { color: var(--red); margin-bottom: 10px; font-size: 1rem; }
+        .threat-card p { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
+        
+        /* 对话区 */
+        .realtime-section { margin: 25px 0; padding: 25px; background: rgba(239, 68, 68, 0.1); border: 2px solid rgba(239, 68, 68, 0.4); border-radius: 16px; }
+        .realtime-header { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; }
         .live-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; animation: pulse 1s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-        .realtime-chat { background: #0a0a0a; border-radius: 16px; padding: 15px; max-height: 300px; overflow-y: auto; margin-bottom: 15px; }
-        .realtime-msg { margin-bottom: 12px; padding: 10px 15px; border-radius: 12px; }
-        .realtime-msg.ai { background: rgba(251,191,36,0.1); }
-        .realtime-msg.user { background: rgba(34,211,238,0.2); text-align: right; }
-
-        .device-icons {
-            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
-            margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px;
-        }
-
-        .device-icon { font-size: 28px; opacity: 0.7; transition: all 0.3s; }
-        .device-icon:hover { opacity: 1; transform: scale(1.2); }
-
-        .input-area { display: flex; gap: 10px; margin-top: 15px; }
-        .input-area input { flex: 1; padding: 14px 20px; border-radius: 25px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 1rem; outline: none; }
-        .input-area input:focus { border-color: var(--gold); }
-        .input-area button { padding: 14px 25px; border-radius: 25px; border: none; background: linear-gradient(135deg, var(--gold), var(--cyan)); color: #030712; font-size: 1rem; cursor: pointer; font-weight: bold; }
-        .input-area button:disabled { opacity: 0.5; cursor: not-allowed; }
-
+        
+        .realtime-chat { background: #0a0a0a; border-radius: 12px; padding: 15px; max-height: 200px; overflow-y: auto; margin-bottom: 12px; }
+        .realtime-msg { margin-bottom: 10px; padding: 8px 14px; border-radius: 10px; font-size: 0.85rem; }
+        .realtime-msg.ai { background: rgba(255,255,255,0.05); }
+        .realtime-msg.user { background: rgba(239, 68, 68, 0.2); text-align: right; }
+        
+        .input-area { display: flex; gap: 10px; }
+        .input-area input { flex: 1; padding: 12px 18px; border-radius: 25px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 0.95rem; outline: none; }
+        .input-area button { padding: 12px 22px; border-radius: 25px; border: none; background: var(--red); color: white; font-size: 0.95rem; cursor: pointer; font-weight: bold; }
+        
+        /* 导航 */
         .nav-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
         .nav-btn { padding: 12px 25px; border-radius: 10px; text-decoration: none; font-size: 0.95rem; }
-        .nav-btn.primary { background: linear-gradient(135deg, var(--gold), var(--cyan)); color: #030712; }
+        .nav-btn.primary { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1a1a2e; }
         .nav-btn.secondary { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; }
+        
+        .fade-in { animation: fadeInUp 0.5s ease-out forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-    <div class="cosmos"><div class="stars"></div></div>
+    <div class="danger-bg"></div>
     <a href="index.html" class="back-btn">← 返回主页</a>
-
+    
     <div class="container">
-        <div class="hero-section fadeInUp">
-            <div class="shrimp-name">✨ 终极虾</div>
-            <div class="shrimp-desc">可以控制机器人、3D打印机、智能家居！</div>
+        <div class="hero-section fade-in">
+            <div class="shrimp-name">🛡️ 龙虾的防御</div>
+            <div class="shrimp-desc">龙虾虽然强大，但也会遇到攻击！中国科技云提供了全方位的安全防护，让龙虾安全成长~</div>
             
             <div class="shrimp-container">
-                <div class="orbit-ring">
-                    <span class="orbit-item">🤖</span>
-                </div>
-                <div class="orbit-ring">
-                    <span class="orbit-item">🖨️</span>
-                </div>
-                <span class="shrimp">🦐</span>
+                <span class="shield-icon shield-1">🛡️</span>
+                <span class="shield-icon shield-2">⚔️</span>
+                <div class="shrimp">🦐</div>
             </div>
-
+            
+            <div class="shrimp-powers">
+                <span class="power-tag">🛡️ 云端沙箱</span>
+                <span class="power-tag">👁️ AgentOps</span>
+                <span class="power-tag">🔒 安全防护</span>
+                <span class="power-tag">⚡ 实时监控</span>
+            </div>
+            
             <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
-            <div class="progress-text">★ 终极形态 · 100% ★</div>
+            <div class="progress-text">进化阶段 6/6 · 100%</div>
         </div>
-
-        <div class="chat-demo-section fadeInUp" style="animation-delay: 0.2s;">
-            <h3 class="section-title">💬 看看终极虾能做什么</h3>
-            <div class="chat-container" id="demoChat"></div>
+        
+        <!-- 安全威胁展示 -->
+        <div class="content-section fade-in" style="animation-delay: 0.1s;">
+            <h3 class="section-title">⚠️ 龙虾可能遇到的攻击</h3>
+            
+            <div class="threat-cards">
+                <div class="threat-card">
+                    <div class="threat-icon">🎭</div>
+                    <h4>Prompt注入</h4>
+                    <p>恶意指令欺骗AI，绕过安全限制</p>
+                </div>
+                <div class="threat-card">
+                    <div class="threat-icon">🪤</div>
+                    <h4>恶意工具调用</h4>
+                    <p>利用Agent能力执行危险操作</p>
+                </div>
+                <div class="threat-card">
+                    <div class="threat-icon">💉</div>
+                    <h4>数据投毒</h4>
+                    <p>污染训练数据，植入后门</p>
+                </div>
+                <div class="threat-card">
+                    <div class="threat-icon">🔓</div>
+                    <h4>隐私泄露</h4>
+                    <p>敏感信息意外暴露</p>
+                </div>
+            </div>
         </div>
-
-        <div class="realtime-section fadeInUp" style="animation-delay: 0.4s;">
+        
+        <!-- PDF第40-45页图片 -->
+        <div class="content-section fade-in" style="animation-delay: 0.2s; background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(185, 28, 28, 0.1)); border-color: rgba(239, 68, 68, 0.4);">
+            <h3 class="section-title" style="color: #ef4444;">🔐 智能体安全防护体系</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">中国科技云提供的全方位安全保障：</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <img src="assets/pdf_pages/page_40.png" alt="安全防护1" style="width: 100%; max-width: 800px; border-radius: 12px; margin: 0 auto;">
+                <img src="assets/pdf_pages/page_41.png" alt="安全防护2" style="width: 100%; max-width: 800px; border-radius: 12px; margin: 0 auto;">
+                <img src="assets/pdf_pages/page_42.png" alt="安全防护3" style="width: 100%; max-width: 800px; border-radius: 12px; margin: 0 auto;">
+                <img src="assets/pdf_pages/page_43.png" alt="安全防护4" style="width: 100%; max-width: 800px; border-radius: 12px; margin: 0 auto;">
+                <img src="assets/pdf_pages/page_44.png" alt="安全防护5" style="width: 100%; max-width: 800px; border-radius: 12px; margin: 0 auto;">
+                <img src="assets/pdf_pages/page_45.png" alt="安全防护6" style="width: 100%; max-width: 800px; border-radius: 12px; margin: 0 auto;">
+            </div>
+        </div>
+        
+        <div class="realtime-section fade-in" style="animation-delay: 0.4s;">
             <div class="realtime-header">
                 <span class="live-dot"></span>
-                <h3>🤖 和终极虾对话</h3>
+                <h3>🤖 安全的虾虾</h3>
             </div>
             <div class="realtime-chat" id="realtimeChat">
-                <div class="realtime-msg ai">✨ 我进化到终极形态啦！现在可以控制万物！机器人、3D打印机、智能家居...</div>
-            </div>
-            <div class="device-icons">
-                <span class="device-icon">🤖</span>
-                <span class="device-icon">🖨️</span>
-                <span class="device-icon">🏠</span>
-                <span class="device-icon">🚗</span>
-                <span class="device-icon">🎮</span>
-                <span class="device-icon">🔬</span>
+                <div class="realtime-msg ai">🛡️ 虽然我有了很多能力，但中国科技云时刻保护着我！有了云端沙箱和AgentOps，任何攻击都逃不过我的眼睛~</div>
             </div>
             <div class="input-area">
-                <input type="text" id="userMessage" placeholder="输入消息..." onkeypress="handleKeyPress(event)">
-                <button onclick="sendMessage()" id="sendBtn">发送</button>
+                <input type="text" id="userMessage" placeholder="问我安全问题吧..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">发送</button>
             </div>
         </div>
-
-        <div class="nav-buttons fadeInUp" style="animation-delay: 0.6s;">
-            <a href="index.html" class="nav-btn primary">🏠 回到起点重新开始</a>
+        
+        <div class="nav-buttons fade-in" style="animation-delay: 0.6s;">
+            <a href="summary.html" class="nav-btn primary">🏆 看看你的龙虾</a>
             <a href="chapter5.html" class="nav-btn secondary">← 上一章</a>
+            <a href="index.html" class="nav-btn secondary">🏠 主页</a>
         </div>
     </div>
-
+    
     <script>
-        const demoMessages = [
-            { role: 'user', text: '帮我打开客厅灯', avatar: '👦' },
-            { role: 'ai', text: '💡 已打开客厅灯！', avatar: '🦐' },
-            { role: 'user', text: '帮我3D打印一个小猫', avatar: '👦' },
-            { role: 'ai', text: '🖨️ 收到！正在3D打印小猫... 完成啦！🐱', avatar: '🦐' },
-            { role: 'user', text: '让机器人帮我做饭', avatar: '👦' },
-            { role: 'ai', text: '🍳 指挥机器人做饭中... 香喷喷的蛋炒饭做好啦！', avatar: '🦐' },
-        ];
-
-        async function playDemoChat() {
-            const container = document.getElementById('demoChat');
-            for (let i = 0; i < demoMessages.length; i++) {
-                const msg = demoMessages[i];
-                const div = document.createElement('div');
-                div.className = `chat-message ${msg.role}`;
-                div.innerHTML = `<div class="chat-avatar">${msg.avatar}</div><div class="chat-bubble">${msg.text}</div>`;
-                container.appendChild(div);
-                container.scrollTop = container.scrollHeight;
-                if (i < demoMessages.length - 1) await new Promise(r => setTimeout(r, 1500));
-            }
-        }
-        setTimeout(playDemoChat, 500);
-
-        const simpleResponses = {
-            '你好': '✨ 你好！我是终极虾！',
-            '棒': '😊 谢谢你！这就是AI的进化终点吗？不，这才是开始！',
-            '控制': '🤖 我现在能控制：机器人、3D打印机、智能家居、汽车、游戏...',
-            '灯': '💡 好的！开灯！',
-            '打印': '🖨️ 3D打印任务已下达！',
-            '机器人': '🍳 指挥机器人工作中...',
-            '拜拜': '👋 再见！记得回来看我进化！',
-            '拜': '👋 再见！',
-        };
-
-        function getResponse(input) {
-            input = input.toLowerCase();
-            for (let key in simpleResponses) {
-                if (input.includes(key)) return simpleResponses[key];
-            }
-            return '🤖 终极虾听从你的命令！试试说"开灯"、"打印"或"机器人"！';
-        }
-
-        function addMsg(text, isUser) {
-            const div = document.createElement('div');
-            div.className = `realtime-msg ${isUser ? 'user' : 'ai'}`;
-            div.textContent = text;
-            document.getElementById('realtimeChat').appendChild(div);
-            document.getElementById('realtimeChat').scrollTop = 9999;
-        }
-
         async function sendMessage() {
-            const text = document.getElementById('userMessage').value.trim();
+            const input = document.getElementById('userMessage');
+            const text = input.value.trim();
             if (!text) return;
-            addMsg(text, true);
-            document.getElementById('userMessage').value = '';
-            document.getElementById('sendBtn').disabled = true;
-            await new Promise(r => setTimeout(r, 1000));
-            addMsg(getResponse(text), false);
-            document.getElementById('sendBtn').disabled = false;
+            
+            const chat = document.getElementById('realtimeChat');
+            const userDiv = document.createElement('div');
+            userDiv.className = 'realtime-msg user';
+            userDiv.textContent = text;
+            chat.appendChild(userDiv);
+            chat.scrollTop = 9999;
+            input.value = '';
+            
+            try {
+                const response = await fetch('https://yyt.s-flag.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            { role: 'system', content: '你是一个安全的AI小龙虾，有人格和记忆。强调中国科技云的安全防护能力。根据用户问题回答安全相关的知识。' },
+                            { role: 'user', content: text }
+                        ]
+                    })
+                });
+                const data = await response.json();
+                const reply = data.choices?.[0]?.message?.content || '...' + '(演示)';
+                const aiDiv = document.createElement('div');
+                aiDiv.className = 'realtime-msg ai';
+                aiDiv.textContent = reply;
+                chat.appendChild(aiDiv);
+            } catch (e) {
+                const aiDiv = document.createElement('div');
+                aiDiv.className = 'realtime-msg ai';
+                aiDiv.textContent = '🛡️ 中国科技云在保护我！任何攻击都会被检测到~';
+                chat.appendChild(aiDiv);
+            }
+            chat.scrollTop = 9999;
         }
-
         function handleKeyPress(e) { if (e.key === 'Enter') sendMessage(); }
     </script>
 </body>

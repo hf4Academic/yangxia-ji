@@ -141,69 +141,75 @@
             <div class="progress-text">进化阶段 5/5 · 95%</div>
         </div>
         
-        <div class="content-section fade-in" style="animation-delay: 0.1s;">
-            <h3 class="section-title">🔄 Agent Loop 自我规划</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px;">龙虾会自己思考如何完成任务：</p>
+        <!-- Agent Loop 自我规划 -->
+        <div class="content-section fade-in" style="animation-delay: 0.1s; background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1)); border-color: rgba(139, 92, 246, 0.4);">
+            <h3 class="section-title" style="color: #a78bfa;">🔄 Agent Loop 自我规划</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">龙虾会自己思考如何完成任务：</p>
             
-            <div class="loop-flow">
-                <div class="loop-step">
-                    <div class="loop-num">1</div>
-                    <div class="loop-info">
-                        <div class="loop-name">🤔 理解任务</div>
-                        <div class="loop-desc">理解用户要什么</div>
-                    </div>
-                </div>
-                <span class="loop-arrow">→</span>
-                <div class="loop-step">
-                    <div class="loop-num">2</div>
-                    <div class="loop-info">
-                        <div class="loop-name">📝 制定计划</div>
-                        <div class="loop-desc">规划需要的步骤</div>
-                    </div>
-                </div>
-                <span class="loop-arrow">→</span>
-                <div class="loop-step">
-                    <div class="loop-num">3</div>
-                    <div class="loop-info">
-                        <div class="loop-name">🔧 执行行动</div>
-                        <div class="loop-desc">调用工具执行</div>
-                    </div>
-                </div>
-                <span class="loop-arrow">→</span>
-                <div class="loop-step">
-                    <div class="loop-num">4</div>
-                    <div class="loop-info">
-                        <div class="loop-name">🔍 检查结果</div>
-                        <div class="loop-desc">反思做对了没</div>
-                    </div>
-                </div>
-                <span class="loop-arrow">↻</span>
+            <!-- PDF第20、21页图片 -->
+            <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 25px;">
+                <img src="assets/pdf_pages/page_20.png" alt="Agent Loop 1" style="width: 100%; max-width: 800px; border-radius: 12px; margin: 0 auto;">
+                <img src="assets/pdf_pages/page_21.png" alt="Agent Loop 2" style="width: 100%; max-width: 800px; border-radius: 12px; margin: 0 auto;">
             </div>
         </div>
         
-        <div class="content-section fade-in" style="animation-delay: 0.2s;">
-            <h3 class="section-title">💻 栗子：写一个小程序</h3>
+        <div class="content-section fade-in" style="animation-delay: 0.2s; background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1)); border-color: rgba(251, 191, 36, 0.4);">
+            <h3 class="section-title" style="color: #fbbf24;">🎮 古诗词背诵PK</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">小孩 vs 家长 - 看谁背得更准确！</p>
             
-            <div class="example-box">
-                <div class="example-title">🐍 User: 帮我写一个猜数字游戏</div>
-                
-                <div class="code-demo">
-                    <div class="code-line"><span class="code-keyword">import</span> random</div>
-                    <div class="code-line">&nbsp;</div>
-                    <div class="code-line"><span class="code-comment"># 生成1-100的随机数</span></div>
-                    <div class="code-line">answer = random.<span class="code-func">randint</span>(<span class="code-string">1</span>, <span class="code-string">100</span>)</div>
-                    <div class="code-line">&nbsp;</div>
-                    <div class="code-line"><span class="code-keyword">for</span> i <span class="code-keyword">in</span> <span class="code-func">range</span>(<span class="code-string">10</span>):</div>
-                    <div class="code-line">    guess = <span class="code-func">int</span>(<span class="code-func">input</span>(<span class="code-string">"猜一个1-100的数字: "</span>))</div>
-                    <div class="code-line">    <span class="code-keyword">if</span> guess == answer:</div>
-                    <div class="code-line">        <span class="code-func">print</span>(<span class="code-string">"🎉 猜对了！答案就是"</span>, answer)</div>
-                    <div class="code-line">        <span class="code-keyword">break</span></div>
-                    <div class="code-line">    <span class="code-keyword">elif</span> guess < answer:</div>
-                    <div class="code-line">        <span class="code-func">print</span>(<span class="code-string">"太小了！"</span>)</div>
-                    <div class="code-line">    <span class="code-keyword">else</span>:</div>
-                    <div class="code-line">        <span class="code-func">print</span>(<span class="code-string">"太大了！"</span>)</div>
-                <div class="code-line"><span class="code-func">print</span>(<span class="code-string">"游戏结束！"</span>)</div>
+            <!-- 游戏区域 -->
+            <div id="gameArea" style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- 选择诗词 -->
+                <div id="poemSelect" style="text-align: center;">
+                    <p style="color: #94a3b8; margin-bottom: 15px;">请选择一首诗开始挑战：</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                        <button onclick="startGame('静夜思')" style="padding: 12px 20px; border-radius: 25px; border: 2px solid #fbbf24; background: rgba(251, 191, 36, 0.2); color: #fbbf24; font-size: 1rem; cursor: pointer;">📜 静夜思</button>
+                        <button onclick="startGame('登鹳雀楼')" style="padding: 12px 20px; border-radius: 25px; border: 2px solid #fbbf24; background: rgba(251, 191, 36, 0.2); color: #fbbf24; font-size: 1rem; cursor: pointer;">📜 登鹳雀楼</button>
+                        <button onclick="startGame('春晓')" style="padding: 12px 20px; border-radius: 25px; border: 2px solid #fbbf24; background: rgba(251, 191, 36, 0.2); color: #fbbf24; font-size: 1rem; cursor: pointer;">📜 春晓</button>
+                    </div>
                 </div>
+                
+                <!-- PK区域 -->
+                <div id="pkArea" style="display: none;">
+                    <!-- 当前诗句显示 -->
+                    <div id="currentLine" style="text-align: center; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; margin-bottom: 20px;">
+                        <span id="poemTitle" style="color: #fbbf24; font-size: 1.1rem; font-weight: bold;"></span>
+                        <div id="targetLine" style="color: #e2e8f0; font-size: 1.3rem; margin-top: 10px; letter-spacing: 3px;"></div>
+                    </div>
+                    
+                    <!-- 对战柱子 -->
+                    <div style="display: flex; justify-content: center; align-items: flex-end; gap: 60px; height: 250px; padding: 20px;">
+                        <!-- 孩子阵营 -->
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="color: #f472b6; font-weight: bold; margin-bottom: 10px;">👧 孩子</div>
+                            <div style="position: relative; width: 80px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+                                <div id="childBar" style="position: absolute; bottom: 0; width: 100%; height: 0%; background: linear-gradient(180deg, #f472b6, #ec4899); transition: height 0.5s ease; border-radius: 10px;"></div>
+                                <div id="childScore" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.5rem; font-weight: bold; z-index: 10;">0</div>
+                            </div>
+                        </div>
+                        
+                        <!-- VS -->
+                        <div style="color: #fbbf24; font-size: 2rem; font-weight: bold; align-self: center;">VS</div>
+                        
+                        <!-- 家长阵营 -->
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="color: #60a5fa; font-weight: bold; margin-bottom: 10px;">👨 家长</div>
+                            <div style="position: relative; width: 80px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+                                <div id="parentBar" style="position: absolute; bottom: 0; width: 100%; height: 0%; background: linear-gradient(180deg, #60a5fa, #3b82f6); transition: height 0.5s ease; border-radius: 10px;"></div>
+                                <div id="parentScore" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.5rem; font-weight: bold; z-index: 10;">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 控制区域 -->
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button id="startBtn" onclick="startReciting()" style="padding: 15px 40px; border-radius: 30px; border: none; background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1c1917; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-bottom: 15px;">🎤 开始背诗</button>
+                        <div id="statusText" style="color: #94a3b8; font-size: 0.9rem;">点击按钮或说出"开始"开始背诵</div>
+                    </div>
+                </div>
+                
+                <!-- 动画文字容器 -->
+                <div id="floatingChars" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"></div>
             </div>
         </div>
         
@@ -222,7 +228,7 @@
         </div>
         
         <div class="nav-buttons fade-in" style="animation-delay: 0.6s;">
-            <a href="summary.html" class="nav-btn primary">🏆 看看你的龙虾</a>
+            <a href="chapter6.html" class="nav-btn primary">🛡️ 第6章：龙虾的防御</a>
             <a href="chapter4.html" class="nav-btn secondary">← 上一章</a>
             <a href="index.html" class="nav-btn secondary">🏠 主页</a>
         </div>
@@ -269,6 +275,194 @@
             chat.scrollTop = 9999;
         }
         function handleKeyPress(e) { if (e.key === 'Enter') sendMessage(); }
+        
+        // ====== 古诗词PK游戏 ======
+        const poems = {
+            '静夜思': {
+                title: '静夜思 - 李白',
+                lines: ['床前明月光', '疑是地上霜', '举头望明月', '低头思故乡']
+            },
+            '登鹳雀楼': {
+                title: '登鹳雀楼 - 王之涣',
+                lines: ['白日依山尽', '黄河入海流', '欲穷千里目', '更上一层楼']
+            },
+            '春晓': {
+                title: '春晓 - 孟浩然',
+                lines: ['春眠不觉晓', '处处闻啼鸟', '夜来风雨声', '花落知多少']
+            }
+        };
+        
+        let currentPoem = null;
+        let currentLineIndex = 0;
+        let childScore = 0;
+        let parentScore = 0;
+        let isReciting = false;
+        let recognition = null;
+        
+        // 初始化语音识别
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'zh-CN';
+            
+            recognition.onresult = function(event) {
+                let finalTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript;
+                    }
+                }
+                if (finalTranscript) {
+                    processReciting(finalTranscript);
+                }
+            };
+            
+            recognition.onerror = function(event) {
+                document.getElementById('statusText').textContent = '语音识别出错，请重试';
+            };
+            
+            recognition.onend = function() {
+                if (isReciting) {
+                    recognition.start();
+                }
+            };
+        }
+        
+        function startGame(poemName) {
+            currentPoem = poems[poemName];
+            currentLineIndex = 0;
+            childScore = 0;
+            parentScore = 0;
+            isReciting = false;
+            
+            document.getElementById('poemSelect').style.display = 'none';
+            document.getElementById('pkArea').style.display = 'block';
+            
+            document.getElementById('poemTitle').textContent = currentPoem.title;
+            updateLine();
+            updateScores();
+        }
+        
+        function updateLine() {
+            const line = currentPoem.lines[currentLineIndex];
+            document.getElementById('targetLine').textContent = line;
+        }
+        
+        function updateScores() {
+            const maxScore = 20;
+            const childPercent = (childScore / maxScore) * 100;
+            const parentPercent = (parentScore / maxScore) * 100;
+            
+            document.getElementById('childBar').style.height = Math.min(childPercent, 100) + '%';
+            document.getElementById('parentBar').style.height = Math.min(parentPercent, 100) + '%';
+            document.getElementById('childScore').textContent = childScore;
+            document.getElementById('parentScore').textContent = parentScore;
+        }
+        
+        function startReciting() {
+            if (!isReciting) {
+                isReciting = true;
+                document.getElementById('startBtn').textContent = '🛑 停止';
+                document.getElementById('statusText').textContent = '请开始背诵...';
+                
+                if (recognition) {
+                    recognition.start();
+                }
+            } else {
+                isReciting = false;
+                document.getElementById('startBtn').textContent = '🎤 开始背诗';
+                document.getElementById('statusText').textContent = '已停止';
+                
+                if (recognition) {
+                    recognition.stop();
+                }
+            }
+        }
+        
+        function processReciting(text) {
+            if (!isReciting || !currentPoem) return;
+            
+            const targetLine = currentPoem.lines[currentLineIndex];
+            document.getElementById('statusText').textContent = '听到: ' + text;
+            
+            // 检查每个字
+            for (let i = 0; i < targetLine.length; i++) {
+                if (text.includes(targetLine[i])) {
+                    // 正确，增加分数
+                    if (Math.random() > 0.5) {
+                        childScore++;
+                    } else {
+                        parentScore++;
+                    }
+                    
+                    // 显示飘字动画
+                    showFloatingChar(targetLine[i]);
+                    updateScores();
+                }
+            }
+            
+            // 检查是否完成这一句
+            let correctCount = 0;
+            for (let char of targetLine) {
+                if (text.includes(char)) correctCount++;
+            }
+            
+            if (correctCount >= targetLine.length * 0.7) {
+                currentLineIndex++;
+                if (currentLineIndex >= currentPoem.lines.length) {
+                    // 结束游戏
+                    endGame();
+                } else {
+                    updateLine();
+                }
+            }
+        }
+        
+        function showFloatingChar(char) {
+            const container = document.getElementById('floatingChars');
+            const el = document.createElement('div');
+            el.textContent = char;
+            el.style.cssText = `
+                position: absolute;
+                left: ${30 + Math.random() * 40}%;
+                top: 40%;
+                font-size: 3rem;
+                font-weight: bold;
+                color: ${Math.random() > 0.5 ? '#fbbf24' : '#60a5fa'};
+                animation: floatUp 1.5s ease-out forwards;
+                text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+            `;
+            container.appendChild(el);
+            
+            setTimeout(() => el.remove(), 1500);
+        }
+        
+        function endGame() {
+            isReciting = false;
+            if (recognition) recognition.stop();
+            
+            let winner = childScore > parentScore ? '孩子' : (parentScore > childScore ? '家长' : '平局');
+            let message = childScore > parentScore ? '👧 孩子获胜！' : (parentScore > childScore ? '👨 家长获胜！' : '🤝 平局！');
+            
+            document.getElementById('startBtn').textContent = '🎮 再来一局';
+            document.getElementById('statusText').textContent = message;
+            document.getElementById('startBtn').onclick = function() {
+                document.getElementById('poemSelect').style.display = 'block';
+                document.getElementById('pkArea').style.display = 'none';
+                document.getElementById('startBtn').onclick = startReciting;
+            };
+        }
+        
+        // 添加动画样式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% { opacity: 1; transform: translateY(0) scale(1); }
+                100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
